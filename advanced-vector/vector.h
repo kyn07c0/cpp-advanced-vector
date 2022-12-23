@@ -121,6 +121,8 @@ public:
     template <typename... Args>
     iterator Emplace(const_iterator pos, Args&&... args)
     {
+        assert(pos >= begin() && pos <= end());
+        
         size_t insert_index = std::distance(cbegin(), pos);
 
         if(size_ == Capacity())
@@ -186,6 +188,8 @@ public:
 
     iterator Erase(const_iterator pos) /*noexcept(std::is_nothrow_move_assignable_v<T>)*/
     {
+        assert(pos >= begin() && pos < end());
+        
         size_t del_index = std::distance(cbegin(), pos);
         std::move(begin() + del_index + 1, end(), begin() + del_index);
         PopBack();
